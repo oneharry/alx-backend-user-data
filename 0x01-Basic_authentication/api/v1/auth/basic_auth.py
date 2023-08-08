@@ -45,8 +45,9 @@ class BasicAuth(Auth):
     def user_object_from_credentials(self, user_email: str, user_pwd:
                                      str) -> TypeVar('User'):
         """ Returns user based on email and password"""
-        if user_email is None or type(user_email) is not str or type(user_pwd)
-                is not str:
+        if user_email is None or type(user_email) is not str:
+            return None
+        if type(user_pwd) is not str:
             return None
         try:
             user = User.search({'email': user_email})
@@ -67,5 +68,3 @@ class BasicAuth(Auth):
         email = user_cred[0]
         pwd = user_cred[1]
         return self.user_object_from_credentials(email, pwd)
-
-
