@@ -7,13 +7,16 @@ from api.v1.auth.auth import Auth
 
 class BasicAuth(Auth):
     """Auth class"""
-    def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """Returns bool"""
-        slashed_path = path if path.endswith('/') else path + '/'
-        if path is not None and slashed_path in excluded_paths:
-            return False
-        if path is None or excluded_paths is None or len(excluded_paths) == 0:
-            return True
+    def extract_user_credentials(self, decoded_base64_authorization_header:
+                                 str) -> (str, str):
+        """Returns users credentials"""
+        if decoded_base64_authorization_header is None:
+            return (None, None)
+        if type(decoded_base64_authorization_header) is not str:
+            return (None, None)
+        if ':' not in decoded_base64_authorization_header:
+            return (None, None)
+        return decoded_base64_authorization_header.split(':', 1)
 
     def extract_base64_authorization_header(self, authorization_header:
                                             str) -> str:
@@ -23,7 +26,7 @@ class BasicAuth(Auth):
             return None
         if not header_auth.startswith("Basic"):
             return None
-        return header_auth.split(' ')[1]
+        return header_auth.split('')[1]
 
     def decode_base64_authorization_header(self, base64_authorization_header:
                                            str) -> str:
