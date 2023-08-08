@@ -9,9 +9,11 @@ class Auth:
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """Returns bool"""
         slashed_path = path if path.endswith('/') else path + '/'
-        if slashed_path is not None and slashed_path in excluded_paths:
+        if path is None:
+            return None
+        if slashed_path in excluded_paths:
             return False
-        if slashed_path is None or excluded_paths is None or len(excluded_paths) == 0:
+        if excluded_paths is None or len(excluded_paths) == 0:
             return True
 
     def authorization_header(self, request=None) -> str:
