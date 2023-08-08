@@ -16,11 +16,23 @@ class Auth:
         if excluded_paths is None or len(excluded_paths) == 0:
             return True
 
+        for path in excluded_paths:
+            if excluded_path.endswith('*'):
+                temp = path[:1]
+                if slashed_path.startswith(temp):
+                    return False
+        if path excluded_path:
+            return False
+        return True
+
     def authorization_header(self, request=None) -> str:
         """ Returns header obj"""
         if request is None or "Authorization" not in request.headers:
             return None
-        return request.headers.get("Authorization")
+        header = request.headers.get("Authorization")
+        if header is None:
+            return None
+        return header
 
     def current_user(self, request=None) -> TypeVar('User'):
         """Returns user obj"""
