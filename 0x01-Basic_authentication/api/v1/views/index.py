@@ -26,7 +26,7 @@ def stats() -> str:
     return jsonify(stats)
 
 
-@app.views.route('/unauthorized', methods=[GET], strict_slashes=False)
+@app.views.route('/unauthorized', methods=['GET'], strict_slashes=False)
 def unauthorized() -> str:
     """
     Path handles the unauthorized user request
