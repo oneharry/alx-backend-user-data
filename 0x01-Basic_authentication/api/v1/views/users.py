@@ -121,7 +121,10 @@ def update_user(user_id: str = None) -> str:
     user.save()
     return jsonify(user.to_json()), 200
 
+
 @app.views.route('/unauthorized', methods=[GET], strict_slashes=False)
 def unauthorized() -> None:
-    """Path handles the unauthorized user request"""
+    """
+    Path handles the unauthorized user request
+    """
     abort(401)
