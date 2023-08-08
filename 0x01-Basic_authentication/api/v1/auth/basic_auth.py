@@ -2,7 +2,7 @@
 """ Basic Authentication class """
 from flask import request
 from typing import List, TypeVar
-from auth.py import Auth
+from api.v1.auth.auth import Auth
 
 
 class BaicAuth(Auth)
@@ -15,12 +15,27 @@ class BaicAuth(Auth)
         if path is None or excluded_paths is None or len(excluded_paths) == 0:
             return True
 
-    def authorization_header(self, request=None) -> str:
-        """ Returns header obj"""
-        if request is None or request.headers.get("Authorization") is None:
-            return request
-        return request.headers.get("Authorization")
+    def extract_base64_authorization_header(self, authorization_header:
+                                            str) -> str::
+        """ Returns base64 of auth headers"""
+        header_auth = request.headers.get("Authorization")
+        if header_auth is None or type(header_auth) is not str or 
+            header_auth.startswith("Basic"):
+            return None
+        return header_auth.split(' ')[1]
 
-    def current_user(self, request=None) -> TypeVar('User'):
-        """Returns user obj"""
-        return request
+    def decode_base64_authorization_header(self, base64_authorization_header: 
+                                           str) -> str::
+        """Returns the decoded value of base64"""
+        if base64_authorization_header is None:
+            return None
+        if type(base64_authorization_header) is not str:
+            return None
+        try:
+            base = base64.b64.decode(base64_authorization_header)
+            base_decode = base.decode('utf-8')
+        except Exception:
+            return None
+        return base_decode
+
+
