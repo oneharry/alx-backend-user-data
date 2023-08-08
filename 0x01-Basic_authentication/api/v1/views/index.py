@@ -27,7 +27,7 @@ def stats() -> str:
 
 
 @app.views.route('/unauthorized', methods=[GET], strict_slashes=False)
-    def unauthorized() -> None:
+def unauthorized() -> None:
     """
     Path handles the unauthorized user request
     """
