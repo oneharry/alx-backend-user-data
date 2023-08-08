@@ -120,11 +120,3 @@ def update_user(user_id: str = None) -> str:
         user.last_name = rj.get('last_name')
     user.save()
     return jsonify(user.to_json()), 200
-
-
-@app.views.route('/unauthorized', methods=[GET], strict_slashes=False)
-def unauthorized() -> None:
-    """
-    Path handles the unauthorized user request
-    """
-    abort(401)
