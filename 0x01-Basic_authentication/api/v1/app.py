@@ -23,6 +23,7 @@ if os.environ.get("AUTH_TYPE") == 'basic_auth':
     from api.v1.auth.basic_auth import BasicAuth
     auth = BasicAuth()
 
+
 @app.before_request
 def before_request() -> str:
     """Executed before every function
@@ -30,7 +31,7 @@ def before_request() -> str:
     """
     if auth is None:
         return
-    
+
     request_list = ['/api/v1/status/', '/api/v1/unauthorized/',
                     '/api/v1/forbidden/']
     if auth.request_path(request.path, request_list):
@@ -45,6 +46,7 @@ def not_found(error) -> str:
     """ Not found handler
     """
     return jsonify({"error": "Not found"}), 404
+
 
 @app.errorhandler(401)
 def not_authorized(error) -> str:
