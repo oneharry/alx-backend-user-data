@@ -41,3 +41,31 @@ class BasicAuth(Auth):
         except Exception:
             return None
         return base_decode
+
+    def user_object_from_credentials(self, user_email: str, user_pwd:
+                                     str) -> TypeVar('User'):
+        """ Returns user based on email and password"""
+        if user_email is None or type(user_email) is not str or type(user_pwd)
+                is not str:
+            return None
+        try:
+            user = User.search({'email': user_email})
+        except Exception:
+            return None
+        if user.is_valid_password(user_pwd):
+            return user
+        return None
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """retrieves users instance of a request"""
+        header_auth = self.authorization_header(header)
+        if header_auth is None:
+            return None
+        ext_base = self.extract_base64_authorization_header(header_auth)
+        decode_base = self.decode_base64_authorization_header(ext_base)
+        user_cred = self.extract_user_credentials(decode_base)
+        email = user_cred[0]
+        pwd = user_cred[1]
+        return self.user_object_from_credentials(email, pwd)
+
+
