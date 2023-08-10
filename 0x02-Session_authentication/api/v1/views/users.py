@@ -122,9 +122,9 @@ def update_user(user_id: str = None) -> str:
     return jsonify(user.to_json()), 200
 
 
-@app.route('/users/<user_id>', methods=['UPDATE'], strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=['UPDATE'], strict_slashes=False)
 def update_users(user_id: str) -> str:
-    """update user"""
+    """update user """
     user = User.get(user_id)
     if user is 'me' and request.current_user is None or user_id is None:
         abort(404)
