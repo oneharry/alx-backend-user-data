@@ -34,7 +34,7 @@ def before_request() -> str:
 
     request_list = ['/api/v1/status/', '/api/v1/unauthorized/',
                     '/api/v1/forbidden/']
-    if auth.request_path(request.path, request_list):
+    if auth.require_auth(request.path, request_list):
         if auth.authorization_header(request) is None:
             abort(401)
         if auth.current_user(request):
