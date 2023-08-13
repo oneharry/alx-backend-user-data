@@ -54,6 +54,7 @@ class BasicAuth(Auth):
             return None
         try:
             user = User.search({'email': user_email})
+
         except Exception:
             return None
         if user.is_valid_password(user_pwd):
@@ -62,7 +63,7 @@ class BasicAuth(Auth):
 
     def current_user(self, request=None) -> TypeVar('User'):
         """retrieves users instance of a request"""
-        header_auth = self.authorization_header(header)
+        header_auth = request.headers
         if header_auth is None:
             return None
         ext_base = self.extract_base64_authorization_header(header_auth)
