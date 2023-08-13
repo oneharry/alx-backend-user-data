@@ -21,12 +21,15 @@ class BasicAuth(Auth):
     def extract_base64_authorization_header(self, authorization_header:
                                             str) -> str:
         """ Returns base64 of auth headers"""
-        header_auth = request.headers.get("Authorization")
+        header_auth = authorization_header
         if header_auth is None or type(header_auth) is not str:
             return None
         if not header_auth.startswith("Basic"):
             return None
-        return header_auth.split('')[1]
+        try:
+            return header_auth.split(' ')[1]
+        except Exception:
+            return None
 
     def decode_base64_authorization_header(self, base64_authorization_header:
                                            str) -> str:
