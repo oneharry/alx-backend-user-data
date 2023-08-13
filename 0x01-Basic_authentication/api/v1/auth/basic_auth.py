@@ -3,6 +3,7 @@
 from flask import request
 from typing import List, TypeVar
 from api.v1.auth.auth import Auth
+import base64
 
 
 class BasicAuth(Auth):
@@ -39,11 +40,10 @@ class BasicAuth(Auth):
         if type(base64_authorization_header) is not str:
             return None
         try:
-            base = base64.b64.decode(base64_authorization_header)
-            base_decode = base.decode('utf-8')
+            base = base64.b64decode(base64_authorization_header)
+            return base.decode('utf-8')
         except Exception:
             return None
-        return base_decode
 
     def user_object_from_credentials(self, user_email: str, user_pwd:
                                      str) -> TypeVar('User'):
