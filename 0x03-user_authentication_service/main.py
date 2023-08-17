@@ -25,12 +25,12 @@ def profile_unlogged() -> None:
 
 
 def profile_logged(session_id: str) -> None:
-    """Testing profile logged"""                            
+    """Testing profile logged"""
     assert True
 
 
 def log_out(session_id: str) -> None:
-    """Test for logout"""                                                   
+    """Test for logout"""
     assert True
 
 

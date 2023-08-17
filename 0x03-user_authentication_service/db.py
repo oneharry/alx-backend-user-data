@@ -42,7 +42,7 @@ class DB:
     def find_user_by(self, **kw) -> User:
         """Returns the first row of users matching kwargs"""
         keys = ['id', 'email', 'hashed_password', 'session_id', 'reser_token']
- 
+
         for k in kw.keys():
             if k not in keys:
                 raise InvalidRequestError

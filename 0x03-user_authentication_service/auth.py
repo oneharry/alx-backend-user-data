@@ -7,7 +7,7 @@ from sqlalchemy.orm.exc import NoResultFound
 import uuid
 
 
-def _hash_password(password: str) -> bytes:
+def _hash_password(password: str) -> str:
     """hash the password"""
     salt = bcrypt.gensalt()
     hashed_pwd = bcrypt.hashpw(password.encode('utf-8'), salt)
