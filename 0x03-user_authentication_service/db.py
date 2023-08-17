@@ -42,7 +42,7 @@ class DB:
     def find_user_by(self, **kw) -> User:
         """Returns the first row of users matching kwargs"""
         keys = ['id', 'email', 'hashed_password', 'session_id', 'reser_token']
-        
+ 
         for k in kw.keys():
             if k not in keys:
                 raise InvalidRequestError
@@ -55,7 +55,7 @@ class DB:
     def update_user(self, user_id: int, **kw) -> None:
         """Update a user found by find_user method"""
         try:
-            keys = ['id', 'email', 'hashed_password', 'session_id', 
+            keys = ['id', 'email', 'hashed_password', 'session_id',
                     'reser_token']
             user = self.find_user_by(id=user_id)
             for k, v in kw.items():
@@ -64,4 +64,3 @@ class DB:
         except (InvalidRequestError, NoResultFound):
             raise ValueError("Error updating")
         self._session.commit()
-

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import bcrypt
 
+
 def _hash_password(password: str) -> bytes:
     """hash the password"""
     salt = bcrypt.gensalt()
