@@ -65,3 +65,8 @@ class DB:
             raise ValueError("Error updating")
         self._session.commit()
 
+    def _hash_password(self, password: str) -> bytes:
+        """hash the password"""
+        salt_value = bcrypt.gensalt()
+        hashed_pwd = bcrypt.hashpw(password.encode('utf-8'), salt)
+        return hashed_pwd
